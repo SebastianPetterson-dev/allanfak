@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Trash2 } from "lucide-react";
 export default function Invoice() {
-  const [invoiceNumber, setInvoiceNumber] = useState("420");
+  const [invoiceNumber, setInvoiceNumber] = useState("0");
   const [date, setDate] = useState("2024-10-22");
   const [dueDate, setDueDate] = useState("2024-11-05");
   const [customerName, setCustomerName] = useState(
@@ -15,8 +15,14 @@ export default function Invoice() {
   );
   const [customerEmail, setCustomerEmail] = useState("sebastian@reframe.nu");
 
+  const [senderName, setSenderName] = useState("Allan Trans Pedersen");
+  const [senderAddress, setSenderAddress] = useState("Carl Nielsensvej 4");
+  const [senderEmail, setSenderEmail] = useState("allansmail@gmail.com");
+  const payFinal = "Betaling til: " + senderName;
+
+
   const [items, setItems] = useState<Item[]>([
-    { description: "Sloppy toppy", quantity: 1, price: 1000 },
+    { description: "Allan tjener penge", quantity: 1, price: 1000 },
   ]);
   const taxRate = 0.25;
 
@@ -26,6 +32,12 @@ export default function Invoice() {
   );
   const tax = subtotal * taxRate;
   const total = subtotal + tax;
+
+  const dueDateInfo = "Forfaldsdato: ";
+  const dueDateFinal = dueDateInfo + dueDate;
+
+  const [accountNumber, setAccountNumber] = useState("6969696969696420");
+  const [regNumber, setRegNumber] = useState("9070");
 
   type Item = {
     description: string;
@@ -47,7 +59,7 @@ export default function Invoice() {
   };
 
   const handleAddItem = () => {
-    setItems([...items, { description: "Ny ting", quantity: 1, price: 0 }]);
+    setItems([...items, { description: "Ny linje", quantity: 1, price: 0 }]);
   };
 
   const handleDeleteItem = (index: number) => {
@@ -68,10 +80,17 @@ export default function Invoice() {
         customerName,
         customerAddress,
         customerEmail,
+        senderName,
+        senderAddress,
+        senderEmail,
         items,
         subtotal,
         tax,
         total,
+        dueDateFinal,
+        payFinal,
+        accountNumber,
+        regNumber,
       }),
     });
 
@@ -126,7 +145,8 @@ export default function Invoice() {
         </div>
       </div>
 
-      <div className="mb-8">
+      <div className="mb-8 grid grid-cols-2 gap-4">
+        <div>
         <h2 className="text-lg font-semibold mb-2">Til:</h2>
         <Input
           placeholder="Customer Name"
@@ -143,6 +163,25 @@ export default function Invoice() {
           value={customerEmail}
           onChange={(e) => setCustomerEmail(e.target.value)}
         />
+        </div>
+        <div>
+          <h2 className="text-lg font-semibold mb-2">Fra:</h2>
+          <Input 
+          placeholder="Afsenders navn"
+          value={senderName}
+          onChange={(e) => setSenderName(e.target.value)}
+          />
+          <Input 
+          placeholder="Afsenders adresse"
+          value={senderAddress}
+          onChange={(e) => setSenderAddress(e.target.value)}
+          />
+          <Input 
+          placeholder="Afsenders mail"
+          value={senderEmail}
+          onChange={(e) => setSenderEmail(e.target.value)}
+          />
+        </div>
       </div>
 
       <table className="w-full mb-8">
@@ -150,7 +189,7 @@ export default function Invoice() {
           <tr className="border-b border-gray-200 text-sm">
             <th className="text-left py-2">Beskrivelse</th>
             <th className="text-right py-2">Antal</th>
-            <th className="text-right py-2">Pris</th>
+            <th className="text-right py-2">Pris pr stk.</th>
             <th className="text-right py-2">Subtotal</th>
           </tr>
         </thead>
@@ -217,10 +256,23 @@ export default function Invoice() {
         </div>
       </div>
 
-      <div className="mt-8 text-sm text-gray-600">
-        <p>Forfaldsdato: 14 dage</p>
-        <p>Betaling til: Andreas Jakobsen</p>
-        <p>Bank konto: 6969696969696420</p>
+      <div className="mt-8 text-sm text-gray-600 max-w-s">
+        <p>{dueDateFinal}</p>
+        <p>{payFinal}</p>
+        <div className="grid grid-cols-2 gap-4">
+          <p className="font-bold">Reg. nummer: </p>
+          <p className="font-bold">Konto nummer</p>
+          <Input 
+          type="number"
+          value={regNumber}
+          onChange={(e) => setRegNumber(e.target.value)}
+          />
+          <Input 
+          type="number"
+          value={accountNumber}
+          onChange={(e) => setAccountNumber(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="mt-8 text-right">
