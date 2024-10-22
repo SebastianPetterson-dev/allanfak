@@ -1,17 +1,12 @@
 import React from "react";
-import InputForm from "@/components/InputForm";
-
-
+import Invoice from "@/components/generate-pdf";
 
 const page: React.FC = () => {
   return (
     <div>
-      <h1>Generer din PDF</h1>
-      <InputForm />
+      <Invoice />
     </div>
   );
 };
-
-
 
 export default page;
