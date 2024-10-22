@@ -1,19 +1,14 @@
-import { useState } from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+import type { FormDataType } from './formdatatype';
+import FakturaPDF from './FakturaPDF';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
-interface InputFormProps {
-    onSubmit: (e: React.FormEvent<HTMLFormElement>, formData: FormDataType) => void;
-  }
-
-  
-interface FormDataType {
-    name: string;
-    // andre felter
-  }
-
-  const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
-    const [formData, setFormData] = useState<FormDataType>({
+const InputForm: React.FC = () => {
+  const [formData, setFormData] = useState<FormDataType>({
     name: '',
     // andre felter
   });
@@ -23,16 +18,30 @@ interface FormDataType {
   };
 
   return (
-    <form onSubmit={(e) => onSubmit(e, formData)}>
-      <Input
-        name="name"
-        placeholder="Navn"
-        value={formData.name}
-        onChange={handleChange}
-      />
-      {/* Andre inputfelter */}
-      <Button type="submit">Generer PDF</Button>
-    </form>
+    <div>
+      <form>
+        <Input
+          name="name"
+          placeholder="Navn"
+          value={formData.name}
+          onChange={handleChange}
+        />
+        {/* Andre inputfelter */}
+      </form>
+      
+      <PDFDownloadLink
+        document={<FakturaPDF data={formData} />}
+        fileName="dokument.pdf"
+      >
+        {({ blob, url, loading, error }) =>
+          loading ? (
+            'Genererer PDF...'
+          ) : (
+            <button type="button">Download PDF</button>
+          )
+        }
+      </PDFDownloadLink>
+    </div>
   );
 };
 
