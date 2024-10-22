@@ -9,10 +9,17 @@ export async function POST(request: NextRequest) {
     customerName,
     customerAddress,
     customerEmail,
+    senderName,
+    senderAddress,
+    senderEmail,
     items,
     subtotal,
     tax,
     total,
+    dueDateFinal,
+    payFinal,
+    accountNumber,
+    regNumber,
   } = await request.json();
 
   const pdfDoc = await PDFDocument.create();
