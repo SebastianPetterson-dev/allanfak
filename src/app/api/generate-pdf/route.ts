@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
   const fontSize = 12;
   const fontSizeHeading = 16;
   const fontSizeMid = 14;
-  const itemWidth = ;
 
 
   page.drawText(`Faktura nr: ${invoiceNumber}`, {
