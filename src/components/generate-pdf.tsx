@@ -36,7 +36,7 @@ export default function Invoice() {
   const dueDateInfo = "Forfaldsdato: ";
   const dueDateFinal = dueDateInfo + dueDate;
 
-  const [accountNumber, setAccountNumber] = useState("6969696969696420");
+  const [accountNumber, setAccountNumber] = useState("1634240019");
   const [regNumber, setRegNumber] = useState("9070");
 
   type Item = {
@@ -246,7 +246,7 @@ export default function Invoice() {
             <span>DKK {subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
-            <span>VAT ({taxRate * 100}%):</span>
+            <span>Moms ({taxRate * 100}%):</span>
             <span>DKK {tax.toFixed(2)}</span>
           </div>
           <div className="flex justify-between font-bold text-lg">

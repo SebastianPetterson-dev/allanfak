@@ -9,10 +9,17 @@ export async function POST(request: NextRequest) {
     customerName,
     customerAddress,
     customerEmail,
+    senderName,
+    senderAddress,
+    senderEmail,
     items,
     subtotal,
     tax,
     total,
+    dueDateFinal,
+    payFinal,
+    accountNumber,
+    regNumber,
   } = await request.json();
 
   const pdfDoc = await PDFDocument.create();
@@ -21,6 +28,10 @@ export async function POST(request: NextRequest) {
 
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const fontSize = 12;
+  const fontSizeHeading = 16;
+  const fontSizeMid = 14;
+  const itemWidth = ;
+
 
   page.drawText(`Faktura nr: ${invoiceNumber}`, {
     x: 50,
@@ -41,24 +52,57 @@ export async function POST(request: NextRequest) {
     font,
   });
 
-  page.drawText(`Navn: ${customerName}`, {
+
+  page.drawText('Til:', {
     x: 50,
     y: height - 130,
-    size: fontSize,
+    size: fontSizeHeading,
     font,
-  });
-  page.drawText(`Adresse: ${customerAddress}`, {
+  })
+  page.drawText(`${customerName}`, {
     x: 50,
     y: height - 150,
     size: fontSize,
     font,
   });
-  page.drawText(`Email: ${customerEmail}`, {
+  page.drawText(`${customerAddress}`, {
     x: 50,
     y: height - 170,
     size: fontSize,
     font,
   });
+  page.drawText(`${customerEmail}`, {
+    x: 50,
+    y: height - 190,
+    size: fontSize,
+    font,
+  });
+
+  page.drawText('Fra:', {
+    x: width - 250,
+    y: height - 130,
+    size: fontSizeHeading,
+    font,
+  })
+  page.drawText(`${senderName}`, {
+    x: width - 250,
+    y: height - 150,
+    size: fontSize,
+    font,
+  });
+  page.drawText(`Adresse: ${senderAddress}`, {
+    x: width - 250,
+    y: height - 170,
+    size: fontSize,
+    font,
+  });
+  page.drawText(`Email: ${senderEmail}`, {
+    x: width - 250,
+    y: height - 190,
+    size: fontSize,
+    font,
+  });
+
 
   type Item = {
     description: string;
@@ -66,7 +110,14 @@ export async function POST(request: NextRequest) {
     price: number;
   };
 
-  let currentY = height - 220;
+  page.drawText('Beskrivelse', {
+    x: 50,
+    y: height - 230,
+    size: fontSizeMid,
+    font,
+  })
+
+  let currentY = height - 250;
   (items as Item[]).forEach((item: Item, index: number) => {
     const price = Number(item.price);
     const totalPrice = item.quantity * price;
