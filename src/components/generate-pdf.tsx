@@ -8,7 +8,7 @@ export default function Invoice() {
   const [date, setDate] = useState("2024-10-22");
   const [dueDate, setDueDate] = useState("2024-11-05");
   const [customerName, setCustomerName] = useState(
-    "Sebastian Motherfucking Petterson"
+    "Sebastian Petterson"
   );
   const [customerAddress, setCustomerAddress] = useState(
     "Vestparken 40, 9550, Mariager"
