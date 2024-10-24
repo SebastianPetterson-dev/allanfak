@@ -145,24 +145,24 @@ export default function Invoice() {
         </div>
       </div>
 
-      <div className="mb-8 grid grid-cols-2 gap-4">
+      <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-        <h2 className="text-lg font-semibold mb-2">Til:</h2>
-        <Input
-          placeholder="Customer Name"
-          value={customerName}
-          onChange={(e) => setCustomerName(e.target.value)}
-        />
-        <Input
-          placeholder="Customer Address"
-          value={customerAddress}
-          onChange={(e) => setCustomerAddress(e.target.value)}
-        />
-        <Input
-          placeholder="Customer Email"
-          value={customerEmail}
-          onChange={(e) => setCustomerEmail(e.target.value)}
-        />
+            <h2 className="text-lg font-semibold mb-2">Til:</h2>
+            <Input
+              placeholder="Customer Name"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              />
+              <Input
+              placeholder="Customer Address"
+              value={customerAddress}
+              onChange={(e) => setCustomerAddress(e.target.value)}
+              />
+              <Input
+              placeholder="Customer Email"
+              value={customerEmail}
+              onChange={(e) => setCustomerEmail(e.target.value)}
+              />
         </div>
         <div>
           <h2 className="text-lg font-semibold mb-2">Fra:</h2>
