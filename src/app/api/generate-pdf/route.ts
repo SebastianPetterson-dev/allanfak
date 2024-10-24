@@ -27,16 +27,18 @@ export async function POST(request: NextRequest) {
   const { width, height } = page.getSize();
 
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
   const fontSize = 12;
   const fontSizeHeading = 16;
   const fontSizeMid = 14;
+  const fontSizeXHeading = 20;
 
 
   page.drawText(`Faktura nr: ${invoiceNumber}`, {
     x: 50,
     y: height - 50,
-    size: fontSize,
-    font,
+    size: fontSizeXHeading,
+    font: fontBold,
   });
   page.drawText(`Dato: ${date}`, {
     x: 50,
@@ -56,7 +58,7 @@ export async function POST(request: NextRequest) {
     x: 50,
     y: height - 130,
     size: fontSizeHeading,
-    font,
+    font: fontBold,
   })
   page.drawText(`${customerName}`, {
     x: 50,
@@ -81,7 +83,7 @@ export async function POST(request: NextRequest) {
     x: width - 250,
     y: height - 130,
     size: fontSizeHeading,
-    font,
+    font: fontBold,
   })
   page.drawText(`${senderName}`, {
     x: width - 250,
@@ -115,23 +117,61 @@ export async function POST(request: NextRequest) {
     size: fontSizeMid,
     font,
   })
+  page.drawText('Antal', {
+  x: 200,
+  y: height - 230,
+  size: fontSizeMid,
+  font,
+  });
+  page.drawText('Pris pr stk.', {
+  x: 325,
+  y: height - 230,
+  size: fontSizeMid,
+  font,
+  });
+  page.drawText('Total pris', {
+  x: 450,
+  y: height - 230,
+  size: fontSizeMid,
+  font,
+  });
 
   let currentY = height - 250;
   (items as Item[]).forEach((item: Item, index: number) => {
     const price = Number(item.price);
     const totalPrice = item.quantity * price;
-
     page.drawText(
-      `${item.description} - Antal: ${item.quantity} - Pris: DKK ${
-        isNaN(price) ? "N/A" : price.toFixed(2)
-      } - Total: DKK ${isNaN(totalPrice) ? "N/A" : totalPrice.toFixed(2)}`,
+      `${item.description}`,
       {
         x: 50,
         y: currentY,
         size: fontSize,
         font,
-      }
-    );
+      });
+    page.drawText(
+      `${item.quantity}`,
+      {
+        x: 200,
+        y: currentY,
+        size: fontSize,
+        font,
+      });
+    page.drawText(
+      `${isNaN(price) ? "N/A" : price.toFixed(2)}`,
+      {
+        x: 325,
+        y: currentY,
+        size: fontSize,
+        font,
+      });
+    page.drawText(
+      `${isNaN(totalPrice) ? "N/A" : totalPrice.toFixed(2)}`,
+      {
+        x: 450,
+        y: currentY,
+        size: fontSize,
+        font,
+      });
     currentY -= 20;
   });
 
@@ -158,7 +198,7 @@ export async function POST(request: NextRequest) {
     x: 50,
     y: currentY - 80,
     size: fontSize,
-    font,
+    font: fontBold,
   });
 
   page.drawText(`${dueDateFinal}`, {
@@ -178,13 +218,13 @@ export async function POST(request: NextRequest) {
   x: 50,
   y: currentY - 150,
   size: fontSize,
-  font,
+  font: fontBold,
   });
   page.drawText('Konto nummer',{
   x: 150,
   y: currentY - 150,
   size: fontSize,
-  font,
+  font: fontBold,
   });
 
   page.drawText(`${accountNumber}`, {
