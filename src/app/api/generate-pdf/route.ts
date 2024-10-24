@@ -161,6 +161,46 @@ export async function POST(request: NextRequest) {
     font,
   });
 
+  page.drawText(`${dueDateFinal}`, {
+    x: 50,
+    y: currentY - 110,
+    size: fontSize,
+    font,
+  });
+  page.drawText(`${payFinal}`, {
+    x: 50,
+    y: currentY - 130,
+    size: fontSize,
+    font,
+  });
+
+  page.drawText('Reg. nummer',{
+  x: 50,
+  y: currentY - 150,
+  size: fontSize,
+  font,
+  });
+  page.drawText('Konto nummer',{
+  x: 150,
+  y: currentY - 150,
+  size: fontSize,
+  font,
+  });
+
+  page.drawText(`${accountNumber}`, {
+    x: 150,
+    y: currentY - 170,
+    size: fontSize,
+    font,
+  });
+  page.drawText(`${regNumber}`, {
+    x: 50,
+    y: currentY - 170,
+    size: fontSize,
+    font,
+  });
+
+
   const pdfBytes = await pdfDoc.save();
 
   return new NextResponse(pdfBytes, {
