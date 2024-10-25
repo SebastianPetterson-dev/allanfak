@@ -126,7 +126,7 @@ export default function Invoice() {
           </div>
         </div>
         <div className="text-right">
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-gray-600 my-1">
             <label>Dato:</label>
             <Input
               value={date}
@@ -134,7 +134,7 @@ export default function Invoice() {
               type="date"
             />
           </div>
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-gray-600 my-1">
             <label>Forfaldsdato:</label>
             <Input
               value={dueDate}
