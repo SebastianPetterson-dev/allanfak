@@ -17,7 +17,7 @@ export default function Invoice() {
 
   const [senderName, setSenderName] = useState("APT Mariager Aps");
   const [senderAddress, setSenderAddress] = useState("Carl Nielsens vej 4");
-  const [senderEmail, setSenderEmail] = useState("ap300102@outlook.com");
+  const [senderEmail, setSenderEmail] = useState("ap30704603@yahoo.dk");
 
 
   const [items, setItems] = useState<Item[]>([
