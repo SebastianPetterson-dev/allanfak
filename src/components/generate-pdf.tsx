@@ -5,20 +5,19 @@ import { Input } from "@/components/ui/input";
 import { Trash2 } from "lucide-react";
 export default function Invoice() {
   const [invoiceNumber, setInvoiceNumber] = useState("0");
-  const [date, setDate] = useState("2024-10-22");
-  const [dueDate, setDueDate] = useState("2024-11-05");
+  const [date, setDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [customerName, setCustomerName] = useState(
-    "Sebastian Petterson"
+    ""
   );
   const [customerAddress, setCustomerAddress] = useState(
-    "Vestparken 40, 9550, Mariager"
+    ""
   );
-  const [customerEmail, setCustomerEmail] = useState("sebastian@reframe.nu");
+  const [customerEmail, setCustomerEmail] = useState("");
 
-  const [senderName, setSenderName] = useState("Allan Trans Pedersen");
-  const [senderAddress, setSenderAddress] = useState("Carl Nielsensvej 4");
-  const [senderEmail, setSenderEmail] = useState("allansmail@gmail.com");
-  const payFinal = "Betaling til: " + senderName;
+  const [senderName, setSenderName] = useState("APT Mariager Aps");
+  const [senderAddress, setSenderAddress] = useState("Carl Nielsens vej 4");
+  const [senderEmail, setSenderEmail] = useState("ap300102@outlook.com");
 
 
   const [items, setItems] = useState<Item[]>([
@@ -38,6 +37,10 @@ export default function Invoice() {
 
   const [accountNumber, setAccountNumber] = useState("1634240019");
   const [regNumber, setRegNumber] = useState("9070");
+
+  const payFinal = "Betaling til: " + regNumber + "  " + accountNumber;
+
+  const [cvrNum, setCvrNum] = useState("43270796");
 
   type Item = {
     description: string;
@@ -91,6 +94,7 @@ export default function Invoice() {
         payFinal,
         accountNumber,
         regNumber,
+        cvrNum,
       }),
     });
 
@@ -126,7 +130,7 @@ export default function Invoice() {
           </div>
         </div>
         <div className="text-right">
-          <div className="text-sm text-gray-600 my-1">
+          <div className="text-sm text-gray-600 my-1.5">
             <label>Dato:</label>
             <Input
               value={date}
@@ -134,7 +138,7 @@ export default function Invoice() {
               type="date"
             />
           </div>
-          <div className="text-sm text-gray-600 my-1">
+          <div className="text-sm text-gray-600 my-1.5">
             <label>Forfaldsdato:</label>
             <Input
               value={dueDate}
@@ -148,39 +152,48 @@ export default function Invoice() {
       <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
             <h2 className="text-lg font-semibold mb-2">Til:</h2>
-            <Input
-              placeholder="Customer Name"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              />
-              <Input
-              placeholder="Customer Address"
-              value={customerAddress}
-              onChange={(e) => setCustomerAddress(e.target.value)}
-              />
-              <Input
-              placeholder="Customer Email"
-              value={customerEmail}
-              onChange={(e) => setCustomerEmail(e.target.value)}
-              />
+            <div className="space-y-1.5">
+                <Input
+                placeholder="Kunde navn"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+                />
+                <Input
+                placeholder="Kunde adresse"
+                value={customerAddress}
+                onChange={(e) => setCustomerAddress(e.target.value)}
+                />
+                <Input
+                placeholder="Kunde mail"
+                value={customerEmail}
+                onChange={(e) => setCustomerEmail(e.target.value)}
+                />
+              </div>
         </div>
         <div>
-          <h2 className="text-lg font-semibold mb-2">Fra:</h2>
-          <Input 
-          placeholder="Afsenders navn"
-          value={senderName}
-          onChange={(e) => setSenderName(e.target.value)}
-          />
-          <Input 
-          placeholder="Afsenders adresse"
-          value={senderAddress}
-          onChange={(e) => setSenderAddress(e.target.value)}
-          />
-          <Input 
-          placeholder="Afsenders mail"
-          value={senderEmail}
-          onChange={(e) => setSenderEmail(e.target.value)}
-          />
+          <div className="space-y-1.5">
+            <h2 className="text-lg font-semibold mb-2">Fra:</h2>
+            <Input 
+            placeholder="Afsenders navn"
+            value={senderName}
+            onChange={(e) => setSenderName(e.target.value)}
+            />
+            <Input 
+            placeholder="Afsenders adresse"
+            value={senderAddress}
+            onChange={(e) => setSenderAddress(e.target.value)}
+            />
+            <Input 
+            placeholder="Afsenders mail"
+            value={senderEmail}
+            onChange={(e) => setSenderEmail(e.target.value)}
+            />
+            <Input 
+            placeholder="Afsenders CVR Nummer"
+            value={cvrNum}
+            onChange={(e) => setCvrNum(e.target.value)}
+            />
+          </div>
         </div>
       </div>
 
@@ -258,7 +271,7 @@ export default function Invoice() {
 
       <div className="mt-8 text-sm text-gray-600 max-w-s">
         <p>{dueDateFinal}</p>
-        <p>{payFinal}</p>
+        <p>Betaling til:</p>
         <div className="grid grid-cols-2 gap-4">
           <p className="font-bold">Reg. nummer: </p>
           <p className="font-bold">Konto nummer</p>
