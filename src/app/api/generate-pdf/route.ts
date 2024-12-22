@@ -288,30 +288,53 @@ function wrapText(text: string, maxCharsPerLine: number) {
   const subtotalNum = Number(subtotal);
   const taxNum = Number(tax);
   const totalNum = Number(total);
+  // Fast position for etiketter og værdier
+  const labelX = width - 300; // Startposition for "Subtotal:", "VAT:", osv.
+  const valueX = width - 150; // Startposition for "DKK + beløb"
 
-  page.drawText(
-    `Subtotal: DKK ${isNaN(subtotalNum) ? "N/A" : subtotalNum.toFixed(2)}`,
-    {
-      x: width - 250,
-      y: currentY - 40,
-      size: fontSize,
-      font,
-    }
-  );
+  // Tegn linjerne med korrekt justering
+  page.drawText(`Subtotal:`, {
+    x: labelX,
+    y: currentY - 40,
+    size: fontSize,
+    font,
+  });
 
-  page.drawText(`VAT: DKK ${isNaN(taxNum) ? "N/A" : taxNum.toFixed(2)}`, {
-    x: width - 250,
+  page.drawText(`DKK ${isNaN(subtotalNum) ? "N/A" : subtotalNum.toFixed(2)}`, {
+    x: valueX,
+    y: currentY - 40,
+    size: fontSize,
+    font,
+  });
+
+  page.drawText(`VAT:`, {
+    x: labelX,
     y: currentY - 60,
     size: fontSize,
     font,
   });
 
-  page.drawText(`Total: DKK ${isNaN(totalNum) ? "N/A" : totalNum.toFixed(2)}`, {
-    x: width - 250,
+  page.drawText(`DKK ${isNaN(taxNum) ? "N/A" : taxNum.toFixed(2)}`, {
+    x: valueX,
+    y: currentY - 60,
+    size: fontSize,
+    font,
+  });
+
+  page.drawText(`Total:`, {
+    x: labelX,
     y: currentY - 80,
     size: fontSize,
     font: fontBold,
   });
+
+  page.drawText(`DKK ${isNaN(totalNum) ? "N/A" : totalNum.toFixed(2)}`, {
+    x: valueX,
+    y: currentY - 80,
+    size: fontSize,
+    font: fontBold,
+  });
+
 
 
   page.drawText(`${dueDateFinal}`, {
