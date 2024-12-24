@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { PDFDocument, StandardFonts, rgb, PDFFont } from "pdf-lib";
 import fs from "fs/promises";
 import path from "path";
 
@@ -301,13 +301,14 @@ function wrapText(text: string, maxCharsPerLine: number) {
   const labelX = width - 250; // Startposition for etiketterne
   const valueX = width - 50; // Højrejustering for værdier
 
+  
   // Tekst med formaterede tal
   const subtotalText = `DKK ${formatNumber(subtotalNum)}`;
   const vatText = `DKK ${formatNumber(taxNum)}`;
   const totalText = `DKK ${formatNumber(totalNum)}`;
 
   // Funktion til at beregne tekstens bredde
-  function getTextWidth(text: string, fontSize: number, font: any): number {
+  function getTextWidth(text: string, fontSize: number, font: PDFFont): number {
   return font.widthOfTextAtSize(text, fontSize);
   }
 
