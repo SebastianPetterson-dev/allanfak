@@ -288,11 +288,36 @@ function wrapText(text: string, maxCharsPerLine: number) {
   const subtotalNum = Number(subtotal);
   const taxNum = Number(tax);
   const totalNum = Number(total);
-  // Fast position for etiketter og værdier
-  const labelX = width - 300; // Startposition for "Subtotal:", "VAT:", osv.
-  const valueX = width - 150; // Startposition for "DKK + beløb"
+  // Funktion til at formatere tal med tusind-separatorer
+  function formatNumber(num: number): string {
+    if (isNaN(num)) return "N/A";
+    return new Intl.NumberFormat("da-DK", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(num);
+  }
 
-  // Tegn linjerne med korrekt justering
+  // Fast position for etiketter og højrejusterede værdier
+  const labelX = width - 250; // Startposition for etiketterne
+  const valueX = width - 50; // Højrejustering for værdier
+
+  // Tekst med formaterede tal
+  const subtotalText = `DKK ${formatNumber(subtotalNum)}`;
+  const vatText = `DKK ${formatNumber(taxNum)}`;
+  const totalText = `DKK ${formatNumber(totalNum)}`;
+
+  // Funktion til at beregne tekstens bredde
+  function getTextWidth(text: string, fontSize: number, font: any): number {
+  return font.widthOfTextAtSize(text, fontSize);
+  }
+
+
+  // Beregn bredden af teksten for højrejustering
+  const subtotalWidth = getTextWidth(subtotalText, fontSize, font);
+  const vatWidth = getTextWidth(vatText, fontSize, font);
+  const totalWidth = getTextWidth(totalText, fontSize, fontBold);
+
+  // Tegn etiketter og højrejusterede værdier
   page.drawText(`Subtotal:`, {
     x: labelX,
     y: currentY - 40,
@@ -300,8 +325,8 @@ function wrapText(text: string, maxCharsPerLine: number) {
     font,
   });
 
-  page.drawText(`DKK ${isNaN(subtotalNum) ? "N/A" : subtotalNum.toFixed(2)}`, {
-    x: valueX,
+  page.drawText(subtotalText, {
+    x: valueX - subtotalWidth, // Højrejustering
     y: currentY - 40,
     size: fontSize,
     font,
@@ -314,8 +339,8 @@ function wrapText(text: string, maxCharsPerLine: number) {
     font,
   });
 
-  page.drawText(`DKK ${isNaN(taxNum) ? "N/A" : taxNum.toFixed(2)}`, {
-    x: valueX,
+  page.drawText(vatText, {
+    x: valueX - vatWidth, // Højrejustering
     y: currentY - 60,
     size: fontSize,
     font,
@@ -328,12 +353,13 @@ function wrapText(text: string, maxCharsPerLine: number) {
     font: fontBold,
   });
 
-  page.drawText(`DKK ${isNaN(totalNum) ? "N/A" : totalNum.toFixed(2)}`, {
-    x: valueX,
+  page.drawText(totalText, {
+    x: valueX - totalWidth, // Højrejustering
     y: currentY - 80,
     size: fontSize,
     font: fontBold,
   });
+
 
 
 
